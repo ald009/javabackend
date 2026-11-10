@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIMM BAMM</title>
+</head>
+<body>
+    
+
+    <script>
+        autok = ["Audi", "BMW", "Mercedes", "Toyota"];
+
+        const azonositolekerese = new Promise(
+            (resolve, reject) => {
+                
+                setTimeout(() => {
+                    resolve([0,1,2,3]);
+                    reject("Hiba történt!");
+                }, 3000);
+            }
+        );
+
+        const autolekeres = autoID => {
+            return new Promise(
+                (resolve, reject) => {
+                setTimeout(id => {
+                    
+                        resolve(autok[id]);
+                    
+                        reject("Nincs ilyen azonosító!");
+                    
+                }, 2000, autoID);
+            });
+        }
+
+        azonositolekerese
+        .then(azonositok => {
+            console.log(azonositok);
+            return autolekeres(azonositok[1]);
+        })
+        .then(auto => {
+            console.log(auto);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+        async function lekerdezes() {
+            try {
+                const azonositok = await azonositolekerese;
+                console.log(azonositok);
+                const auto = await autolekeres(azonositok[1]);
+                console.log(auto);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+    </script>
+</body>
+</html>
